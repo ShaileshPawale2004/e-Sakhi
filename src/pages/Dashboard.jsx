@@ -2,7 +2,7 @@ import { auth } from "../firebase";
 import { signOut } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
-import { FaBook, FaBrain, FaUserTie, FaUsers, FaBriefcase, FaMedal, FaDownload, FaComments } from 'react-icons/fa';
+import { FaBook, FaBrain, FaUserTie, FaUsers, FaBriefcase, FaMedal, FaDownload, FaComments, FaUser } from 'react-icons/fa';
 import "../styles/Dashboard.css";
 
 const Dashboard = () => {
@@ -50,7 +50,12 @@ const Dashboard = () => {
       <div className="dashboard-content">
         <header className="dashboard-header">
           <h1 className="dashboard-title">Welcome to Your Learning Journey</h1>
-          <button className="logout-btn" onClick={logout}>Logout</button>
+          <div className="header-buttons">
+            <Link to="/profile" className="profile-btn">
+              <FaUser /> Profile
+            </Link>
+            <button className="logout-btn" onClick={logout}>Logout</button>
+          </div>
         </header>
 
         <div className="module-grid">

@@ -9,6 +9,7 @@ import Quiz from "./pages/Quiz";
 import Progress from "./pages/Progress";
 import Resources from "./pages/Resources";
 import Feedback from "./pages/Feedback";
+import Profile from "./pages/Profile";
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
         <Route path="/skills" element={<Learn />} />
         <Route path="/mentorship" element={<GroupStudy />} />
         <Route path="/entrepreneurship" element={<Learn />} />
+        <Route path="/profile" element={<Profile />} />
       </Routes>
     </BrowserRouter>
   );
