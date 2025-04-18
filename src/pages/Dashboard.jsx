@@ -1,7 +1,8 @@
 import { auth } from "../firebase";
 import { signOut } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
-import { FaBook, FaBrain, FaUserTie, FaUsers, FaBriefcase } from 'react-icons/fa';
+import { Link } from "react-router-dom";
+import { FaBook, FaBrain, FaUserTie, FaUsers, FaBriefcase, FaMedal } from 'react-icons/fa';
 import "../styles/Dashboard.css";
 
 const Dashboard = () => {
@@ -53,6 +54,11 @@ const Dashboard = () => {
         </header>
 
         <div className="module-grid">
+          <Link to="/progress" className="module-card">
+            <FaMedal className="module-icon" />
+            <h3>Progress & Certificates</h3>
+            <p>Track your learning journey and download certificates</p>
+          </Link>
           {modules.map((module, index) => (
             <a key={index} href={module.link} className="module-card">
               <div className="module-icon">{module.icon}</div>
