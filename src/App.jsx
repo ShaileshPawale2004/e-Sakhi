@@ -10,6 +10,7 @@ import Progress from "./pages/Progress";
 import Resources from "./pages/Resources";
 import Feedback from "./pages/Feedback";
 import Profile from "./pages/Profile";
+import About from "./pages/About";
 
 function App() {
   return (
@@ -30,6 +31,7 @@ function App() {
         <Route path="/mentorship" element={<GroupStudy />} />
         <Route path="/entrepreneurship" element={<Learn />} />
         <Route path="/profile" element={<Profile />} />
+        <Route path="/about" element={<About />} />
       </Routes>
     </BrowserRouter>
   );

@@ -2,7 +2,7 @@ import { auth } from "../firebase";
 import { signOut } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
-import { FaBook, FaBrain, FaUserTie, FaUsers, FaBriefcase, FaMedal, FaDownload, FaComments, FaUser } from 'react-icons/fa';
+import { FaBook, FaBrain, FaUserTie, FaUsers, FaBriefcase, FaMedal, FaDownload, FaComments, FaUser, FaInfoCircle } from 'react-icons/fa';
 import "../styles/Dashboard.css";
 
 const Dashboard = () => {
@@ -51,6 +51,9 @@ const Dashboard = () => {
         <header className="dashboard-header">
           <h1 className="dashboard-title">Welcome to Your Learning Journey</h1>
           <div className="header-buttons">
+            <Link to="/about" className="profile-btn">
+              <FaInfoCircle /> About
+            </Link>
             <Link to="/profile" className="profile-btn">
               <FaUser /> Profile
             </Link>
