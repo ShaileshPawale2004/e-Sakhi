@@ -67,7 +67,7 @@ const Learn = () => {
   };
 
   const handleStartCourse = (courseId) => {
-    navigate(/learn/${courseId});
+    navigate(`/learn/${courseId}`);
   };
 
   const CourseCard = ({ course }) => (
