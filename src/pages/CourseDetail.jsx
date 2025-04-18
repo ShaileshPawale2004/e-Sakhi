@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import '../styles/CourseDetail.css';
 import { FaPlay, FaBook, FaQuestionCircle } from 'react-icons/fa';
 
 const CourseDetail = () => {
   const { courseId } = useParams();
+  const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState('content');
 
   // Sample course data - should be fetched based on courseId
@@ -176,9 +177,9 @@ const CourseDetail = () => {
           </button>
           <button
             className={`tab-btn ${activeTab === 'quiz' ? 'active' : ''}`}
-            onClick={() => setActiveTab('quiz')}
+            onClick={() => navigate(`/learn/${courseId}/quiz`)}
           >
-            <FaQuestionCircle /> Quiz
+            <FaQuestionCircle /> Take Assessment
           </button>
         </div>
 
@@ -191,3 +192,4 @@ const CourseDetail = () => {
 };
 
 export default CourseDetail;
+
