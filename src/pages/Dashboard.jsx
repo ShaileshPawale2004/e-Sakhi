@@ -2,7 +2,7 @@ import { auth } from "../firebase";
 import { signOut } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
-import { FaBook, FaBrain, FaUserTie, FaUsers, FaBriefcase, FaMedal } from 'react-icons/fa';
+import { FaBook, FaBrain, FaUserTie, FaUsers, FaBriefcase, FaMedal, FaDownload, FaComments } from 'react-icons/fa';
 import "../styles/Dashboard.css";
 
 const Dashboard = () => {
@@ -58,6 +58,16 @@ const Dashboard = () => {
             <FaMedal className="module-icon" />
             <h3>Progress & Certificates</h3>
             <p>Track your learning journey and download certificates</p>
+          </Link>
+          <Link to="/resources" className="module-card">
+            <FaDownload className="module-icon" />
+            <h3>Learning Resources</h3>
+            <p>Access study guides, planners, and educational materials</p>
+          </Link>
+          <Link to="/feedback" className="module-card">
+            <FaComments className="module-icon" />
+            <h3>Share Feedback</h3>
+            <p>Help us improve with your text or voice feedback</p>
           </Link>
           {modules.map((module, index) => (
             <a key={index} href={module.link} className="module-card">

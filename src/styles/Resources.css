@@ -1,0 +1,154 @@
+.resources-page {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #1a365d, #2d3748);
+    padding: 2rem;
+    color: white;
+  }
+  
+  .resources-content {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  .resources-header {
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+  
+  .resources-header h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    background: linear-gradient(45deg, #48bb78, #81e6d9);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  
+  .resources-header p {
+    font-size: 1.2rem;
+    color: rgba(255, 255, 255, 0.8);
+  }
+  
+  .resources-grid {
+    display: grid;
+    gap: 2rem;
+  }
+  
+  .resource-category {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(8px);
+    border-radius: 1rem;
+    padding: 2rem;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+  }
+  
+  .category-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .category-icon {
+    font-size: 1.5rem;
+    color: #48bb78;
+    background: rgba(72, 187, 120, 0.2);
+    padding: 0.75rem;
+    border-radius: 0.75rem;
+  }
+  
+  .category-header h2 {
+    font-size: 1.5rem;
+    font-weight: 600;
+  }
+  
+  .resource-items {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+  }
+  
+  .resource-card {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 0.75rem;
+    padding: 1.5rem;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: transform 0.2s ease;
+  }
+  
+  .resource-card:hover {
+    transform: translateY(-2px);
+  }
+  
+  .resource-info h3 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+  }
+  
+  .resource-info p {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+  }
+  
+  .resource-meta {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.6);
+  }
+  
+  .format, .size {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 0.25rem 0.75rem;
+    border-radius: 1rem;
+  }
+  
+  .download-btn {
+    background: linear-gradient(45deg, #48bb78, #38a169);
+    color: white;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.5rem;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    transition: all 0.2s ease;
+  }
+  
+  .download-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .download-btn svg {
+    font-size: 1.1rem;
+  }
+  
+  @media (max-width: 768px) {
+    .resources-page {
+      padding: 1rem;
+    }
+  
+    .resources-header h1 {
+      font-size: 2rem;
+    }
+  
+    .resource-items {
+      grid-template-columns: 1fr;
+    }
+  
+    .resource-category {
+      padding: 1.5rem;
+    }
+  }
+  

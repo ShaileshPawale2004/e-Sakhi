@@ -7,6 +7,8 @@ import GroupStudy from "./pages/GroupStudy";
 import CourseDetail from "./pages/CourseDetail";
 import Quiz from "./pages/Quiz";
 import Progress from "./pages/Progress";
+import Resources from "./pages/Resources";
+import Feedback from "./pages/Feedback";
 
 function App() {
   return (
@@ -19,6 +21,8 @@ function App() {
         <Route path="/learn/:courseId" element={<CourseDetail />} />
         <Route path="/learn/:courseId/quiz" element={<Quiz />} />
         <Route path="/progress" element={<Progress />} />
+        <Route path="/resources" element={<Resources />} />
+        <Route path="/feedback" element={<Feedback />} />
         <Route path="/elearning" element={<Learn />} />
         <Route path="/groupstudy" element={<GroupStudy />} />
         <Route path="/skills" element={<Learn />} />

@@ -1,0 +1,219 @@
+.feedback-page {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #1a365d, #2d3748);
+    padding: 2rem;
+    color: white;
+  }
+  
+  .feedback-content {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  
+  .feedback-header {
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+  
+  .feedback-icon {
+    font-size: 3rem;
+    color: #48bb78;
+    margin-bottom: 1rem;
+  }
+  
+  .feedback-header h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    background: linear-gradient(45deg, #48bb78, #81e6d9);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  
+  .feedback-header p {
+    font-size: 1.2rem;
+    color: rgba(255, 255, 255, 0.8);
+  }
+  
+  .feedback-type-selector {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+  
+  .type-btn {
+    padding: 0.75rem 1.5rem;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    border-radius: 0.5rem;
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  
+  .type-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+  }
+  
+  .type-btn.active {
+    background: #48bb78;
+    border-color: #48bb78;
+  }
+  
+  .feedback-form {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(8px);
+    border-radius: 1rem;
+    padding: 2rem;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+  }
+  
+  .text-feedback textarea {
+    width: 100%;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 0.5rem;
+    padding: 1rem;
+    color: white;
+    font-size: 1rem;
+    resize: vertical;
+    min-height: 150px;
+  }
+  
+  .text-feedback textarea:focus {
+    outline: none;
+    border-color: #48bb78;
+  }
+  
+  .audio-feedback {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+    min-height: 150px;
+    justify-content: center;
+  }
+  
+  .record-btn,
+  .stop-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 1rem 2rem;
+    border-radius: 2rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: none;
+  }
+  
+  .record-btn {
+    background: #48bb78;
+    color: white;
+  }
+  
+  .stop-btn {
+    background: #e53e3e;
+    color: white;
+  }
+  
+  .record-btn:hover,
+  .stop-btn:hover {
+    transform: translateY(-2px);
+  }
+  
+  .recording-status {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  
+  .recording-indicator {
+    width: 12px;
+    height: 12px;
+    background: #e53e3e;
+    border-radius: 50%;
+    animation: pulse 1.5s infinite;
+  }
+  
+  .recording-time {
+    font-size: 1.2rem;
+    font-family: monospace;
+    min-width: 60px;
+  }
+  
+  .audio-preview {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    width: 100%;
+  }
+  
+  .audio-preview audio {
+    width: 100%;
+    margin-bottom: 1rem;
+  }
+  
+  .submit-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    width: 100%;
+    padding: 1rem;
+    margin-top: 2rem;
+    background: linear-gradient(45deg, #48bb78, #38a169);
+    color: white;
+    border: none;
+    border-radius: 0.5rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  
+  .submit-btn:disabled {
+    background: rgba(255, 255, 255, 0.1);
+    cursor: not-allowed;
+  }
+  
+  .submit-btn:not(:disabled):hover {
+    transform: translateY(-2px);
+  }
+  
+  @keyframes pulse {
+    0% {
+      transform: scale(1);
+      opacity: 1;
+    }
+    50% {
+      transform: scale(1.2);
+      opacity: 0.5;
+    }
+    100% {
+      transform: scale(1);
+      opacity: 1;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .feedback-page {
+      padding: 1rem;
+    }
+  
+    .feedback-header h1 {
+      font-size: 2rem;
+    }
+  
+    .feedback-type-selector {
+      flex-direction: column;
+    }
+  
+    .type-btn {
+      width: 100%;
+    }
+  }
+  
