@@ -4,6 +4,7 @@ import Dashboard from "./pages/Dashboard";
 import Landing from "./pages/Landing";
 import Learn from "./pages/Learn";
 import GroupStudy from "./pages/GroupStudy";
+import CourseDetail from "./pages/CourseDetail";
 
 function App() {
   return (
@@ -13,7 +14,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/learn" element={<Learn />} />
-        <Route path="/learn/:courseId" element={<Learn />} />
+        <Route path="/learn/:courseId" element={<CourseDetail />} />
         <Route path="/elearning" element={<Learn />} />
         <Route path="/groupstudy" element={<GroupStudy />} />
         <Route path="/skills" element={<Learn />} />
