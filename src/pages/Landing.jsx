@@ -3,87 +3,82 @@ import { Link } from 'react-router-dom';
 import '../styles/Landing.css';
 import { FaGraduationCap, FaUsers, FaLaptopCode } from 'react-icons/fa';
 
+// ← import your gallery images here
+import gallery1 from '../assets/gallery/A1.png';
+import gallery2 from '../assets/gallery/A2.jpg';
+import gallery3 from '../assets/gallery/A3.jpg';
+import gallery4 from '../assets/gallery/A4.jpg';
+
+// ← import the hero-bg SVG
+import heroBg from '../assets/hero-bg.svg';
+
+const galleryImages = [gallery1, gallery2, gallery3, gallery4];
+
 const Landing = () => {
-  const features = [
-    {
-      icon: <FaGraduationCap className="feature-icon" />,
-      title: "Quality Education",
-      description: "Access to high-quality educational resources and personalized learning paths."
-    },
-    {
-      icon: <FaUsers className="feature-icon" />,
-      title: "Mentorship",
-      description: "Connect with experienced mentors who guide and support your journey."
-    },
-    {
-      icon: <FaLaptopCode className="feature-icon" />,
-      title: "Tech Skills",
-      description: "Learn practical technology skills that are relevant in today's digital world."
-    }
-  ];
-
-  const testimonials = [
-    {
-      text: "This platform opened up new opportunities for me. The mentorship program helped me pursue my dreams in technology.",
-      author: "Priya Sharma",
-      role: "Computer Science Student",
-      location: "Rural Maharashtra"
-    },
-    {
-      text: "I learned coding from scratch and now I'm working as a web developer. This platform changed my life.",
-      author: "Anjali Patel",
-      role: "Web Developer",
-      location: "Rural Gujarat"
-    }
-  ];
-
   return (
     <div className="landing-page">
+      {/* — Hero Section — */}
       <section className="hero">
         <div className="hero-content">
           <h1>Empowering Rural Girls Through Technology Education</h1>
           <p className="hero-text">
-            Join our platform to access quality education, mentorship, and opportunities in technology.
-            Together, we can break barriers and create a more inclusive digital future.
+            Empowering learners with cutting-edge tech courses, expert mentorship, and a vibrant community.
           </p>
-          <Link to="/login" className="btn btn-primary">Get Started</Link>
+          <div className="hero-buttons">
+            <Link to="/learn" className="btn btn-primary">Get Started</Link>
+            <Link to="/about" className="btn btn-primary">Learn More</Link>
+          </div>
         </div>
       </section>
 
+      {/* — Features Section — */}
       <section className="features">
-        <div className="features-grid">
-          {features.map((feature, index) => (
-            <div key={index} className="feature-card">
-              {feature.icon}
-              <h3 className="feature-title">{feature.title}</h3>
-              <p className="feature-description">{feature.description}</p>
-            </div>
-          ))}
+        <div className="container features-grid">
+          <div className="feature-card">
+            <FaGraduationCap className="feature-icon" />
+            <h3 className="feature-title">Expert Mentors</h3>
+            <p className="feature-description">
+              Learn from industry professionals with real‑world experience.
+            </p>
+          </div>
+          <div className="feature-card">
+            <FaLaptopCode className="feature-icon" />
+            <h3 className="feature-title">Hands‑On Projects</h3>
+            <p className="feature-description">
+              Build a portfolio of real applications to showcase your skills.
+            </p>
+          </div>
+          <div className="feature-card">
+            <FaUsers className="feature-icon" />
+            <h3 className="feature-title">Vibrant Community</h3>
+            <p className="feature-description">
+              Collaborate, network, and grow with fellow learners.
+            </p>
+          </div>
         </div>
       </section>
 
-      <section className="testimonials">
-        <div className="testimonials-grid">
-          {testimonials.map((testimonial, index) => (
-            <div key={index} className="testimonial-card">
-              <p className="testimonial-text">"{testimonial.text}"</p>
-              <div className="testimonial-author">
-                <div className="author-name">{testimonial.author}</div>
-                <div className="author-role">{testimonial.role}</div>
-                <div className="author-location">{testimonial.location}</div>
+      {/* — Marquee Gallery Section with SVG Background — */}
+      <section
+        className="marquee-section"
+        style={{
+          backgroundImage: `url(${heroBg})`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+        }}
+      >
+        <h2 className="gallery-title">Our Community in Action</h2>
+        <div className="marquee">
+          <div className="marquee-track">
+            {[...galleryImages, ...galleryImages].map((src, idx) => (
+              <div className="marquee-item" key={idx}>
+                <img
+                  src={src}
+                  alt={`Gallery ${(idx % galleryImages.length) + 1}`}
+                />
               </div>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      <section className="cta-section">
-        <div className="cta-content">
-          <h2 className="cta-title">Start Your Journey Today</h2>
-          <p className="cta-text">
-            Take the first step towards your tech career. Join our community of ambitious learners.
-          </p>
-          <Link to="/login" className="btn btn-primary">Join Now</Link>
+            ))}
+          </div>
         </div>
       </section>
     </div>

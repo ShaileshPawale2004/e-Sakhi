@@ -68,7 +68,7 @@
     margin-bottom: var(--spacing-lg);
     color: white;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-    background: linear-gradient(135deg, #1a365d, #2d3748);
+    background: linear-gradient(135deg, #2a5298, #1e3c72);
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -277,7 +277,7 @@
   }
   
   /* Buttons */
-  .btn-primary {
+  .btn-primary .btn-secondary{
     background: linear-gradient(135deg, #1a365d, #2d3748);
     border: none;
     color: white;
@@ -288,15 +288,58 @@
     background: linear-gradient(135deg, #2d3748, #1a365d);
     transform: translateY(-2px);
   }
-  
-  .btn-secondary {
-    background: transparent;
-    border: 2px solid #1a365d;
-    color: #1a365d;
+
+/* — Marquee Gallery Section — */
+.marquee-section {
+  /* remove any background-color here; we're using the SVG */
+  padding: 2rem 0;
+  text-align: center;
+  /* make sure the section expands to fit its content */
+  width: 100%;
+}
+
+/* rest stays the same… */
+.gallery-title {
+  margin: 0 0 1.5rem;
+  font-size: 2.25rem;
+  color: #fff; /* or choose a contrasting color for text over your SVG */
+}
+
+.marquee {
+  overflow: hidden;
+  position: relative;
+}
+
+.marquee-track {
+  display: flex;
+  align-items: center;
+  animation: marquee-animation 20s linear infinite;
+}
+
+.marquee-track:hover {
+  animation-play-state: paused;
+}
+
+.marquee-item {
+  flex: 0 0 auto;
+  width: 250px;
+  margin-right: 1rem;
+}
+
+.marquee-item img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  object-fit: cover;
+}
+
+@keyframes marquee-animation {
+  0% {
+    transform: translateX(0);
   }
-  
-  .btn-secondary:hover {
-    background: #1a365d;
-    color: white;
-    transform: translateY(-2px);
+  100% {
+    transform: translateX(-50%);
   }
+}
