@@ -35,7 +35,7 @@ const Dashboard = () => {
       icon: <FaUsers />,
       title: "Group Study & Mentorship",
       description: "Learn together with peers/mentors in collaborative study sessions.",
-      link: "/groupstudy"
+      link: "https://ruralgrow.onrender.com"
     },
     {
       icon: <FaBriefcase />,

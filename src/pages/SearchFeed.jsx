@@ -47,8 +47,11 @@ const SearchFeed = () => {
 
     try {
       const response = await axios.request(options);
-      const keywords = response.data?.results?.map(res => res.suggestion) || [];
+      
+      const keywords = response.data?.results|| [];
       setSuggestions(keywords);
+      console.log("kEY WORDS: ", keywords);
+      
     } catch (error) {
       console.error('Error fetching suggestions:', error);
       setSuggestions([]);

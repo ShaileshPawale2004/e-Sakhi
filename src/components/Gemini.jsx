@@ -143,7 +143,7 @@ Answer: <correct option letter>
           </button>
         </div>
       ) : loading ? (
-        <p style={{ textAlign: 'center', fontSize: '1.2rem' }}>⏳ Generating quiz questions...</p>
+        <p style={{ textAlign: 'center', fontSize: '1.2rem', color:'blue' }}>⏳ Generating quiz questions...</p>
       ) : showResult ? (
         <div>
           <h3 style={{ textAlign: 'center' }}>

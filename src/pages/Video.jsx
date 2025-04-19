@@ -144,7 +144,8 @@ const Video = () => {
         backgroundColor: "#1a365d",
         backgroundImage: 'url("https://www.transparenttextures.com/patterns/ag-square.png")',
         backgroundSize: "auto",
-        overflow: "hidden"
+        overflow: "hidden",
+        borderRadius:'0'
       }}
     >
       {/* Left YouTube Panel */}

@@ -142,20 +142,23 @@ const Schemes = () => {
               <div key={index} className="scheme-card">
                 <h3 className="scheme-name">{scheme.name}</h3>
                 <p className="scheme-description">{scheme.description}</p>
-                <select onChange={(e) => handleLanguageChange(index, e.target.value)}>
-                  <option value="en">English</option>
-                  <option value="kn">Kannada</option>
-                  <option value="mr">Marathi</option>
-                  <option value="ml">Malayalam</option>
-                </select>
-                <a
-                  href={scheme.link}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="scheme-link"
-                >
-                  View Scheme
-                </a>
+                <div style={{display:'flex', minHeight:'fit-content', height:'4rem', justifyContent:'space-between'}}>
+                  <select  style={{ verticalAlign: 'middle', height:'3rem' }} onChange={(e) => handleLanguageChange(index, e.target.value)}>
+                    <option value="en">English</option>
+                    <option value="kn">Kannada</option>
+                    <option value="mr">Marathi</option>
+                    <option value="ml">Malayalam</option>
+                  </select>
+                  <a
+                    href={scheme.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="scheme-link"
+                    style={{height:'3rem'}}
+                  >
+                    View Scheme
+                  </a>
+                </div>
               </div>
             ) : null
           ))}
