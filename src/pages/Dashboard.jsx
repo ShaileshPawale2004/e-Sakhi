@@ -56,12 +56,14 @@ const Dashboard = () => {
         </header>
 
         <div className="module-grid">
-          <Link to="/progress" className="module-card">
-            <FaMedal className="module-icon" />
-            <h3>Progress & Certificates</h3>
-            <p>Track your learning journey and download certificates</p>
-          </Link>
-          <Link to="/resources" className="module-card">
+          {modules.map((module, index) => (
+            <a key={index} href={module.link} className="module-card">
+              <div className="module-icon">{module.icon}</div>
+              <h3 className="module-title">{module.title}</h3>
+              <p className="module-description">{module.description}</p>
+            </a>
+          ))}
+                    <Link to="/resources" className="module-card">
             <FaDownload className="module-icon" />
             <h3>Learning Resources</h3>
             <p>Access study guides, planners, and educational materials</p>
@@ -71,13 +73,6 @@ const Dashboard = () => {
             <h3>Share Feedback</h3>
             <p>Help us improve with your text or voice feedback</p>
           </Link>
-          {modules.map((module, index) => (
-            <a key={index} href={module.link} className="module-card">
-              <div className="module-icon">{module.icon}</div>
-              <h3 className="module-title">{module.title}</h3>
-              <p className="module-description">{module.description}</p>
-            </a>
-          ))}
         </div>
       </div>
     </div>

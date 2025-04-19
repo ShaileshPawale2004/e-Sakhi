@@ -4,6 +4,8 @@ import YouTubePlayer from "../components/YouTubePlayer";
 import axios from "axios";
 import { supabase } from "../supabaseClient";
 import Gemini from "../components/Gemini";
+import { analytics } from "../firebase";
+import { logEvent } from "firebase/analytics";
 
 const voiceMap = {
   hi: { languageCode: "hi-IN", name: "hi-IN-Chirp3-HD-Charon" },
@@ -28,7 +30,6 @@ const Video = () => {
   const audioRef = useRef(null);
   const ytPlayerRef = useRef(null);
 
-  // Sync audio with YouTube state
   const handlePlayerEvents = (event) => {
     const ytState = event.data;
     const audio = audioRef.current;
@@ -36,6 +37,7 @@ const Video = () => {
 
     if (ytState === window.YT.PlayerState.PLAYING) {
       audio.play();
+      logEvent(analytics, 'video_play', { videoId: vpid });
     } else if (
       ytState === window.YT.PlayerState.PAUSED ||
       ytState === window.YT.PlayerState.ENDED
@@ -64,10 +66,8 @@ const Video = () => {
       .from("audio")
       .getPublicUrl(fileName);
 
-    console.log("🎧 Uploaded:", urlData.publicUrl);
     setAudioUrl(urlData.publicUrl);
   };
-
   const getBase64AndUpload = async (text) => {
     const voice = voiceMap[selectedLang];
     const response = await axios.post(
@@ -132,33 +132,24 @@ const Video = () => {
   }, [vpid, selectedLang]);
 
   return (
-    <div
-      className="video-container"
-      style={{
-        // border: "2px solid red",
-        display: "flex",
-        gap: "1rem",
-        height: "100vh",
-        padding: "1rem",
-        minWidth:'100%',
-        borderRadius:'0',
-        background:'white'
-      }}
-    >
-      <div
-        className="youtube-video-div"
-        style={{ width: "70%", padding: "1rem", overflowY: "auto" }}
-      >
+    <div className="video-container" style={{ display: "flex", gap: "1rem", height: "100vh", padding: "1rem", minWidth: '100%', background: 'white' }}>
+      <div className="youtube-video-div" style={{ width: "70%", padding: "1rem", overflowY: "auto" }}>
         <YouTubePlayer
           key={vpid}
           videoId={vpid}
           onReady={(player) => (ytPlayerRef.current = player)}
           onStateChange={handlePlayerEvents}
         />
-  
+
         <div style={{ marginTop: "20px" }}>
           <label>Select your language: </label>
-          <select value={selectedLang} onChange={(e) => setSelectedLang(e.target.value)}>
+          <select
+            value={selectedLang}
+            onChange={(e) => {
+              setSelectedLang(e.target.value);
+              logEvent(analytics, 'language_selected', { language: e.target.value });
+            }}
+          >
             {languageOptions.map((lang) => (
               <option key={lang.value} value={lang.value}>
                 {lang.label}
@@ -166,48 +157,24 @@ const Video = () => {
             ))}
           </select>
         </div>
-  
+
         <div style={{ marginTop: "20px" }}>
           <h3>Translated Captions ({selectedLang}):</h3>
-          <div
-            style={{
-              maxHeight: "20rem",
-              overflowY: "auto",
-              // border: "1px solid #ccc",
-              padding: "10px",
-              borderRadius: "8px",
-              backgroundColor: "#f9f9f9",
-            }}
-          >
+          <div style={{ maxHeight: "20rem", overflowY: "auto", padding: "10px", borderRadius: "8px", backgroundColor: "#f9f9f9" }}>
             <p style={{ whiteSpace: "pre-wrap" }}>{translated || "Loading..."}</p>
           </div>
         </div>
 
-  
         {audioUrl && (
-          <audio
-            ref={audioRef}
-            src={audioUrl}
-            controls
-            style={{ marginTop: "20px" }}
-          />
+          <audio ref={audioRef} src={audioUrl} controls style={{ marginTop: "20px" }} />
         )}
       </div>
-  
-      {/* Right Side (Gemini Section) */}
-      <div
-        style={{
-          // border: "2px solid blue",
-          width: "30vw",
-          padding: "1rem",
-          overflowY: "auto",
-        }}
-      >
+
+      <div style={{ width: "30vw", padding: "1rem", overflowY: "auto" }}>
         <Gemini videoData={translated} />
       </div>
     </div>
   );
-  
 };
 
 export default Video;

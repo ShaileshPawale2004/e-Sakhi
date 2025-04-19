@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../styles/Learn.css';
+import { analytics } from '../firebase';
+import { logEvent } from 'firebase/analytics';
 
 const Learn = () => {
   const navigate = useNavigate();
   const [selectedLanguage, setSelectedLanguage] = useState('all');
   const [searchQuery, setSearchQuery] = useState('');
 
-  // Sample course data - can be moved to Firestore later
   const courses = {
     foundational: [
       {
@@ -67,6 +68,7 @@ const Learn = () => {
   };
 
   const handleStartCourse = (courseId) => {
+    logEvent(analytics, 'course_started', { courseId });
     navigate(`/learn/${courseId}`);
   };
 
@@ -97,7 +99,10 @@ const Learn = () => {
             <select 
               className="language-select"
               value={selectedLanguage}
-              onChange={(e) => setSelectedLanguage(e.target.value)}
+              onChange={(e) => {
+                setSelectedLanguage(e.target.value);
+                logEvent(analytics, 'language_filter_applied', { selectedLanguage: e.target.value });
+              }}
             >
               <option value="all">All Languages</option>
               <option value="English">English</option>
