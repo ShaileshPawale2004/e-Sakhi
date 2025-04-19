@@ -1,9 +1,11 @@
 // src/firebase.js
 import { initializeApp } from "firebase/app";
-import { getAuth, GoogleAuthProvider  } from "firebase/auth";
+import { getAuth, GoogleAuthProvider } from "firebase/auth";
 import { getAnalytics } from "firebase/analytics";
 import { getFirestore } from "firebase/firestore";
+import { getStorage } from "firebase/storage";
 
+// Your Firebase configuration
 const firebaseConfig = {
   apiKey: "AIzaSyBTT19E3RjiWzNVNqNNK0O2st1dsVuz0a0",
   authDomain: "rural-girls-platform-e4373.firebaseapp.com",
@@ -16,16 +18,11 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 
-// Authentication
+// Services
 export const auth = getAuth(app);
-
-// Analytics (only in browser)
-export const analytics =
-  typeof window !== "undefined"
-    ? getAnalytics(app)
-    : null;
-
-// Firestore
-export const db = getFirestore(app);
-
 export const provider = new GoogleAuthProvider();
+export const db = getFirestore(app);
+export const storage = getStorage(app);
+
+// Analytics (only available in browser)
+export const analytics = typeof window !== "undefined" ? getAnalytics(app) : null;

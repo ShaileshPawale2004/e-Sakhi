@@ -1,26 +1,38 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { FaGithub, FaEnvelope, FaLinkedin, FaHandsHelping } from 'react-icons/fa';
+import { analytics } from '../firebase';
+import { logEvent } from 'firebase/analytics';
 import '../styles/About.css';
+import sheldonImg from '../assets/team/Ashutosh.jpg';
+import saanviImg from '../assets/team/Sachin.jpg';
+import ayeshaImg from '../assets/team/Shailesh.jpg';
+import rahulImg from '../assets/team/Sheldon.jpg';
 
 const About = () => {
   const mentors = [
     {
-      name: "Sarah Johnson",
-      role: "Tech Lead & Mentor",
-      expertise: "Web Development",
-      image: "https://i.pravatar.cc/150?img=1"
+      name: "Ashutosh Naryalgol",
+      role: "Team Leader",
+      expertise: "Backend",
+      image: sheldonImg
     },
     {
-      name: "Priya Sharma",
-      role: "Education Coordinator",
-      expertise: "Digital Literacy",
-      image: "https://i.pravatar.cc/150?img=2"
+      name: "Sachin Kiragi",
+      role: "Developer",
+      expertise: "Backend",
+      image: saanviImg
     },
     {
-      name: "Maria Garcia",
-      role: "Community Manager",
-      expertise: "Community Building",
-      image: "https://i.pravatar.cc/150?img=3"
+      name: "Shailesh Pawale",
+      role: "Developer",
+      expertise: "Frontend",
+      image: ayeshaImg
+    },
+    {
+      name: "Sheldon Pereira",
+      role: "Developer",
+      expertise: "Frontend",
+      image: rahulImg
     }
   ];
 
@@ -28,22 +40,16 @@ const About = () => {
     {
       icon: <FaEnvelope />,
       label: "Email Us",
-      value: "contact@ruralgirlsplatform.org",
-      link: "mailto:contact@ruralgirlsplatform.org"
+      value: "loosers.prabal95@gmail.com",
+      link: "loosers.prabal95@gmail.com"
     },
-    {
-      icon: <FaGithub />,
-      label: "GitHub",
-      value: "Contribute to our platform",
-      link: "https://github.com/rural-girls-platform"
-    },
-    {
-      icon: <FaLinkedin />,
-      label: "LinkedIn",
-      value: "Follow our journey",
-      link: "https://linkedin.com/company/rural-girls-platform"
-    }
   ];
+
+  useEffect(() => {
+    if (analytics) {
+      logEvent(analytics, 'page_view', { page: 'About Page' });
+    }
+  }, []);
 
   return (
     <div className="about-container">
@@ -52,8 +58,7 @@ const About = () => {
         <section className="about-section">
           <h1 className="about-title">Our Mission</h1>
           <p className="mission-text">
-            Empowering rural girls through digital education and skill development. 
-            We believe in creating opportunities that transcend geographical boundaries 
+            Empowering rural girls through digital education. We believe in creating opportunities that transcend geographical boundaries 
             and socio-economic barriers.
           </p>
         </section>
@@ -83,7 +88,7 @@ const About = () => {
 
         {/* Meet the Mentors Section */}
         <section className="about-section">
-          <h2>Meet Our Mentors</h2>
+          <h2>Meet Our Team</h2>
           <div className="mentors-grid">
             {mentors.map((mentor, index) => (
               <div key={index} className="mentor-card">
@@ -107,6 +112,13 @@ const About = () => {
                 className="contact-card"
                 target="_blank" 
                 rel="noopener noreferrer"
+                onClick={() => {
+                  if (analytics) {
+                    logEvent(analytics, 'contact_click', {
+                      method: method.label
+                    });
+                  }
+                }}
               >
                 <div className="contact-icon">{method.icon}</div>
                 <h3>{method.label}</h3>
@@ -116,25 +128,6 @@ const About = () => {
           </div>
         </section>
 
-        {/* Contribute Section */}
-        <section className="about-section contribute-section">
-          <h2>How to Contribute</h2>
-          <div className="contribute-content">
-            <div className="contribute-icon">
-              <FaHandsHelping />
-            </div>
-            <div className="contribute-text">
-              <p>
-                We welcome contributions from developers, educators, and mentors. 
-                Whether you want to improve our platform, create educational content, 
-                or mentor students, there's a place for you in our community.
-              </p>
-              <a href="https://github.com/rural-girls-platform" className="contribute-button">
-                Join as Contributor
-              </a>
-            </div>
-          </div>
-        </section>
       </div>
     </div>
   );
