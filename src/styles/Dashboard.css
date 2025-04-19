@@ -3,6 +3,9 @@
   background: linear-gradient(135deg, #1a365d, #2d3748);
   padding: 2rem;
   color: white;
+  background-color: #1a365d;
+background-image: url("https://www.transparenttextures.com/patterns/ag-square.png");
+/* This is mostly intended for prototyping; please download the pattern and re-host for production environments. Thank you! */
 }
 
 .dashboard-header {
@@ -120,4 +123,76 @@
   .module-grid {
     grid-template-columns: 1fr;
   }
+}
+
+.action-card {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(8px);
+  border-radius: var(--radius-md); /* smaller curve */
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 0.75rem 1.2rem;
+  transition: all 0.3s ease;
+  color: white;
+  text-decoration: none;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+}
+
+.action-card:hover {
+  background: rgba(255, 255, 255, 0.15);
+  transform: translateY(-3px);
+}
+
+.action-icon {
+  font-size: 1.2rem; /* smaller icon */
+  margin-bottom: 0.2rem;
+  color: white;
+  transition: color 0.3s ease;
+}
+
+.action-title {
+  font-size: 0.9rem; /* smaller text */
+  font-weight: 500;
+  color: white;
+  transition: color 0.3s ease;
+}
+
+.action-card:hover .action-icon,
+.action-card:hover .action-title {
+  color: white; /* keep white even on hover */
+}
+
+.module-icon {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  color: #38A169;
+  transition: color 0.3s ease;
+}
+
+.module-title {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #38A169;
+  transition: color 0.3s ease;
+}
+
+.module-description {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.9rem;
+  line-height: 1.5;
+  transition: color 0.3s ease;
+}
+
+.module-card:hover .module-icon,
+.module-card:hover .module-title,
+.module-card:hover .module-description {
+  color: #48BB78;
+}
+
+.module-card:hover {
+  background: rgba(56, 161, 105, 0.15);
+  border-color: rgba(56, 161, 105, 0.25);
 }

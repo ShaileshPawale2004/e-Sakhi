@@ -2,7 +2,19 @@ import { auth } from "../firebase";
 import { signOut } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
-import { FaBook, FaBrain, FaUserTie, FaUsers, FaBriefcase, FaMedal, FaDownload, FaComments, FaUser, FaInfoCircle } from 'react-icons/fa';
+import {
+  FaBook,
+  FaBrain,
+  FaUserTie,
+  FaUsers,
+  FaBriefcase,
+  FaMedal,
+  FaDownload,
+  FaComments,
+  FaUser,
+  FaInfoCircle,
+  FaSignOutAlt
+} from "react-icons/fa";
 import "../styles/Dashboard.css";
 
 const Dashboard = () => {
@@ -19,10 +31,10 @@ const Dashboard = () => {
       description: "Access educational content tailored to your local context and needs.",
       link: "/searchFeed"
     },
-    { 
+    {
       icon: <FaUsers />,
-      title: "Group Study",
-      description: "Learn together with peers in collaborative study sessions.",
+      title: "Group Study & Mentorship",
+      description: "Learn together with peers/mentors in collaborative study sessions.",
       link: "/groupstudy"
     },
     {
@@ -45,13 +57,18 @@ const Dashboard = () => {
         <header className="dashboard-header">
           <h1 className="dashboard-title">Welcome to Your Learning Journey</h1>
           <div className="header-buttons">
-            <Link to="/about" className="profile-btn">
-              <FaInfoCircle /> About
+            <Link to="/about" className="action-card">
+              <FaInfoCircle className="action-icon" />
+              <h3 className="action-title">About</h3>
             </Link>
-            <Link to="/profile" className="profile-btn">
-              <FaUser /> Profile
+            <Link to="/profile" className="action-card">
+              <FaUser className="action-icon" />
+              <h3 className="action-title">Profile</h3>
             </Link>
-            <button className="logout-btn" onClick={logout}>Logout</button>
+            <button className="action-card" onClick={logout}>
+              <FaSignOutAlt className="action-icon" />
+              <h3 className="action-title">Logout</h3>
+            </button>
           </div>
         </header>
 
@@ -63,15 +80,21 @@ const Dashboard = () => {
               <p className="module-description">{module.description}</p>
             </a>
           ))}
-                    <Link to="/resources" className="module-card">
+
+          <Link to="/resources" className="module-card">
             <FaDownload className="module-icon" />
-            <h3>Learning Resources</h3>
-            <p>Access study guides, planners, and educational materials</p>
+            <h3 className="module-title">Learning Resources</h3>
+            <p className="module-description">
+              Access study guides, planners, and educational materials in pdf
+            </p>
           </Link>
+
           <Link to="/feedback" className="module-card">
             <FaComments className="module-icon" />
-            <h3>Share Feedback</h3>
-            <p>Help us improve with your text or voice feedback</p>
+            <h3 className="module-title">Share Feedback</h3>
+            <p className="module-description">
+              Help us improve with your text feedback
+            </p>
           </Link>
         </div>
       </div>

@@ -9,6 +9,7 @@ import {
 import { useNavigate } from "react-router-dom";
 import { logEvent } from "firebase/analytics";
 import "../styles/Auth.css";
+import Spline from "@splinetool/react-spline"; // ✅ only this added
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -54,9 +55,7 @@ const Login = () => {
     if (analytics) logEvent(analytics, "google_signup_attempt");
     signInWithPopup(auth, provider)
       .then(result => {
-        const credential = GoogleAuthProvider.credentialFromResult(result);
-        const token = credential.accessToken;
-        const user = result.user;
+        GoogleAuthProvider.credentialFromResult(result);
         if (analytics) logEvent(analytics, "google_signup_success");
         navigate("/dashboard");
       })
@@ -67,33 +66,39 @@ const Login = () => {
   };
 
   return (
-    <div className="auth-container">
-      <div className="auth-box">
-        <h2 className="auth-title">Let’s Get You Logged In</h2>
-        <input
-          type="email"
-          className="auth-input"
-          placeholder="Email"
-          value={email}
-          onChange={e => setEmail(e.target.value)}
-        />
-        <input
-          type="password"
-          className="auth-input"
-          placeholder="Password"
-          value={password}
-          onChange={e => setPassword(e.target.value)}
-        />
-        <button className="auth-button login-btn" onClick={login}>
-          Login
-        </button>
-        <button className="auth-button login-btn" onClick={signup}>
-          Sign Up
-        </button>
-        <button className="auth-button login-btn" onClick={registerWithGoogle}>
-          Sign in With Google
-        </button>
-        {msg && <p className="auth-message">{msg}</p>}
+    <div className="auth-wrapper">
+      <Spline
+        scene="https://prod.spline.design/GkZ27JndmCostjgy/scene.splinecode"
+        className="spline-bg"
+      />
+      <div className="auth-container">
+        <div className="auth-box">
+          <h2 className="auth-title">Let’s Get You Logged In</h2>
+          <input
+            type="email"
+            className="auth-input"
+            placeholder="Email"
+            value={email}
+            onChange={e => setEmail(e.target.value)}
+          />
+          <input
+            type="password"
+            className="auth-input"
+            placeholder="Password"
+            value={password}
+            onChange={e => setPassword(e.target.value)}
+          />
+          <button className="auth-button login-btn" onClick={login}>
+            Login
+          </button>
+          <button className="auth-button login-btn" onClick={signup}>
+            Sign Up
+          </button>
+          <button className="auth-button login-btn" onClick={registerWithGoogle}>
+            Sign in With Google
+          </button>
+          {msg && <p className="auth-message">{msg}</p>}
+        </div>
       </div>
     </div>
   );
