@@ -17,7 +17,7 @@ const Dashboard = () => {
       icon: <FaBook />,
       title: "Localized E-Learning",
       description: "Access educational content tailored to your local context and needs.",
-      link: "/elearning"
+      link: "/searchFeed"
     },
     {
       icon: <FaBrain />,

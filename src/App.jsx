@@ -11,6 +11,8 @@ import Resources from "./pages/Resources";
 import Feedback from "./pages/Feedback";
 import Profile from "./pages/Profile";
 import About from "./pages/About";
+import SearchFeed from "./pages/SearchFeed";
+import Video from "./pages/Video";
 
 function App() {
   return (
@@ -32,6 +34,8 @@ function App() {
         <Route path="/entrepreneurship" element={<Learn />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/about" element={<About />} />
+        <Route path='/searchFeed' element={<SearchFeed/>}/>
+        <Route path="/video/:vpid" element={<Video />} />
       </Routes>
     </BrowserRouter>
   );
