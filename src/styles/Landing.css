@@ -39,8 +39,9 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background: url('../assets/hero-bg.svg') no-repeat center center;
+    background: url('../assets/Girls.jpeg') no-repeat center center;
     background-size: cover;
+    background-position-x: 75%; /* Moves image 25% to the right */
     padding: 2rem;
     margin: 0;
     width: 100%;
@@ -50,16 +51,13 @@
   .hero-content {
     width: 100%;
     max-width: 800px;
-    text-align: center;
+    text-align: left;
     color: white;
-    padding: 3rem;
-    margin: 0 auto;
-    background: rgba(0, 0, 0, 0.6);
-    backdrop-filter: blur(8px);
-    border-radius: var(--radius-lg);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+    padding: 3rem 2rem;
+    margin-left: -600px;             /* Remove center alignment */
+    align-self: flex-start;     /* Align to the top-left of the hero section */
   }
+   
   
   .hero-content h1 {
     font-size: 3.5rem;
@@ -67,28 +65,27 @@
     line-height: 1.2;
     margin-bottom: var(--spacing-lg);
     color: white;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-    background: linear-gradient(135deg, #2a5298, #1e3c72);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
+    text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.7); /* Stronger shadow for readability */
   }
   
   .hero-text {
     font-size: 1.25rem;
     max-width: 800px;
-    margin: 0 auto var(--spacing-xl);
-    color: var(--text-light);
-    line-height: 1.8;
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+    margin: 0 0 var(--spacing-xl) 0;
+    padding: 1rem;
+    color: #f1f1f1; /* soft off-white */
+    text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.7); /* smooth shadow */
   }
+  
+  
   
   .hero-buttons {
     display: flex;
     gap: var(--spacing-md);
-    justify-content: center;
+    justify-content: flex-start; /* Align buttons to the left */
     margin-top: 2rem;
   }
+  
   
   /* Features Section */
   .features {

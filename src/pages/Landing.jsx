@@ -32,9 +32,15 @@ const Landing = () => {
       <section className="hero">
         <div className="hero-content">
           <h1>Empowering Rural Girls Through Technology Education</h1>
+
+          <h2>
           <p className="hero-text">
-            Empowering learners with cutting‑edge tech courses, expert mentorship, and a vibrant community.
+            Empowering learners with cutting‑edge tech courses,
+            <br></br>expert mentorship, and a vibrant community.
           </p>
+          </h2>
+
+
           <div className="hero-buttons">
             {/* Redirect to Login instead of directly to Dashboard/Learn */}
             <Link to="/login" className="btn btn-primary">
