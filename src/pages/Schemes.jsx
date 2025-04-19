@@ -135,7 +135,7 @@ const Schemes = () => {
 
       <div className="schemes-grid">
         {schemes.map((scheme, index) => (
-          scheme.name && scheme.description && scheme.link && scheme.name.toLowerCase().includes("women") ? (
+          scheme.name && scheme.description && scheme.link  ? (
             
             <div key={index} className="scheme-card">
               <h3 className="scheme-name">{scheme.name}</h3>
