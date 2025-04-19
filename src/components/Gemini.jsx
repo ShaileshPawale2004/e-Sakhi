@@ -35,6 +35,7 @@ Make sure the language, tone, and style match the original content exactly.`;
         const result = await model.generateContent(prompt);
         const text = result.response.text().replace(/\*/g, '');
         setQaData(text);
+        console.log("response qa data: ", text);
       } catch (error) {
         console.error('Error fetching Q&A:', error);
         setQaData('Failed to load Q&A content.');

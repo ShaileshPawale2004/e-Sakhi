@@ -1,15 +1,14 @@
 import React, { useState, useEffect } from "react";
-import { auth } from "../firebase";
+import { auth, provider, analytics } from "../firebase";
 import {
   createUserWithEmailAndPassword,
-  signInWithEmailAndPassword
+  signInWithEmailAndPassword,
+  signInWithPopup,
+  GoogleAuthProvider
 } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
-import "../styles/Auth.css";
-
-// Analytics
-import { analytics } from "../firebase";
 import { logEvent } from "firebase/analytics";
+import "../styles/Auth.css";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -17,7 +16,6 @@ const Login = () => {
   const [msg, setMsg] = useState("");
   const navigate = useNavigate();
 
-  // Log page_view on mount
   useEffect(() => {
     if (analytics) {
       logEvent(analytics, "page_view", {
@@ -27,40 +25,44 @@ const Login = () => {
   }, []);
 
   const login = () => {
-    if (analytics) {
-      logEvent(analytics, "login_attempt");
-    }
-    signInWithEmailAndPassword(auth, email, password)
+    if (analytics) logEvent(analytics, "login_attempt");
+    signInWithEmailAndPassword(auth, email.trim(), password)
       .then(() => {
-        if (analytics) {
-          logEvent(analytics, "login_success");
-        }
+        if (analytics) logEvent(analytics, "login_success");
         navigate("/dashboard");
       })
       .catch(err => {
-        if (analytics) {
-          logEvent(analytics, "login_error", { error: err.message });
-        }
+        if (analytics) logEvent(analytics, "login_error", { error: err.message });
         setMsg(err.message);
       });
   };
 
   const signup = () => {
-    if (analytics) {
-      logEvent(analytics, "signup_attempt");
-    }
-    createUserWithEmailAndPassword(auth, email, password)
+    if (analytics) logEvent(analytics, "signup_attempt");
+    createUserWithEmailAndPassword(auth, email.trim(), password)
       .then(() => {
-        if (analytics) {
-          logEvent(analytics, "signup_success");
-        }
+        if (analytics) logEvent(analytics, "signup_success");
         navigate("/dashboard");
       })
       .catch(err => {
-        if (analytics) {
-          logEvent(analytics, "signup_error", { error: err.message });
-        }
+        if (analytics) logEvent(analytics, "signup_error", { error: err.message });
         setMsg(err.message);
+      });
+  };
+
+  const registerWithGoogle = () => {
+    if (analytics) logEvent(analytics, "google_signup_attempt");
+    signInWithPopup(auth, provider)
+      .then(result => {
+        const credential = GoogleAuthProvider.credentialFromResult(result);
+        const token = credential.accessToken;
+        const user = result.user;
+        if (analytics) logEvent(analytics, "google_signup_success");
+        navigate("/dashboard");
+      })
+      .catch(error => {
+        if (analytics) logEvent(analytics, "google_signup_error", { error: error.message });
+        setMsg(error.message);
       });
   };
 
@@ -87,6 +89,9 @@ const Login = () => {
         </button>
         <button className="auth-button login-btn" onClick={signup}>
           Sign Up
+        </button>
+        <button className="auth-button login-btn" onClick={registerWithGoogle}>
+          Sign in With Google
         </button>
         {msg && <p className="auth-message">{msg}</p>}
       </div>
