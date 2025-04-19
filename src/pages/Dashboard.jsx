@@ -19,7 +19,7 @@ const Dashboard = () => {
       description: "Access educational content tailored to your local context and needs.",
       link: "/searchFeed"
     },
-    {
+    { 
       icon: <FaUsers />,
       title: "Group Study",
       description: "Learn together with peers in collaborative study sessions.",

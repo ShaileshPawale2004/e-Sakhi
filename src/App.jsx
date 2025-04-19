@@ -16,7 +16,6 @@ import Video from "./pages/Video";
 import Entrepreneurship from "./pages/Entrepreneurship"; 
 import PracticeDetails from './pages/PracticeDetails';
 import Schemes from "./pages/Schemes";
-import ResourceSearch from "./pages/ResourceSearch";
 
 function App() {
   return (
@@ -41,7 +40,6 @@ function App() {
         <Route path="/profile" element={<Profile />} />
         <Route path="/about" element={<About />} />
         <Route path="/searchFeed" element={<SearchFeed />} />
-        <Route path='/ResourceSearch' element={<ResourceSearch/>}/>
         <Route path="/video/:vpid" element={<Video />} />
       </Routes>
     </BrowserRouter>

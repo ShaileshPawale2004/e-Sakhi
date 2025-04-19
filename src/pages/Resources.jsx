@@ -36,7 +36,7 @@ const ResourceSearch = () => {
           placeholder="E.g., financial literacy, self-help group, government scheme"
           style={{ flexGrow: 1, padding: '0.5rem', fontSize: '1rem' }}
         />
-        <button onClick={handleSearch} style={{ padding: '0.5rem 1rem' }}>Search</button>
+        <button onClick={handleSearch} style={{ padding: '0.5rem 1rem', color:'white' }}>Search</button>
       </div>
 
       {loading && <p>Loading...</p>}
