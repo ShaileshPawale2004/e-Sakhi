@@ -1,20 +1,31 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import '../styles/Landing.css';
 import { FaGraduationCap, FaUsers, FaLaptopCode } from 'react-icons/fa';
 
-// ← import your gallery images here
+// Firebase Analytics
+import { analytics } from '../firebase';
+import { logEvent } from 'firebase/analytics';
+
+// gallery images
 import gallery1 from '../assets/gallery/A1.png';
 import gallery2 from '../assets/gallery/A2.jpg';
 import gallery3 from '../assets/gallery/A3.jpg';
 import gallery4 from '../assets/gallery/A4.jpg';
-
-// ← import the hero-bg SVG
-import heroBg from '../assets/hero-bg.svg';
+// hero background
+import heroBg   from '../assets/hero-bg.svg';
 
 const galleryImages = [gallery1, gallery2, gallery3, gallery4];
 
 const Landing = () => {
+  useEffect(() => {
+    if (analytics) {
+      logEvent(analytics, 'page_view', {
+        page_path: window.location.pathname
+      });
+    }
+  }, []);
+
   return (
     <div className="landing-page">
       {/* — Hero Section — */}
@@ -22,11 +33,17 @@ const Landing = () => {
         <div className="hero-content">
           <h1>Empowering Rural Girls Through Technology Education</h1>
           <p className="hero-text">
-            Empowering learners with cutting-edge tech courses, expert mentorship, and a vibrant community.
+            Empowering learners with cutting‑edge tech courses, expert mentorship, and a vibrant community.
           </p>
           <div className="hero-buttons">
-            <Link to="/learn" className="btn btn-primary">Get Started</Link>
-            <Link to="/about" className="btn btn-primary">Learn More</Link>
+            {/* Redirect to Login instead of directly to Dashboard/Learn */}
+            <Link to="/login" className="btn btn-primary">
+              Get Started
+            </Link>
+            {/* Secondary button for Learn More */}
+            <Link to="/about" className="btn btn-primary">
+              Learn More
+            </Link>
           </div>
         </div>
       </section>
