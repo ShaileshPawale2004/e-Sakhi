@@ -20,18 +20,6 @@ const Dashboard = () => {
       link: "/searchFeed"
     },
     {
-      icon: <FaBrain />,
-      title: "Skill-Building",
-      description: "Develop practical skills through interactive courses and workshops.",
-      link: "/skills"
-    },
-    {
-      icon: <FaUserTie />,
-      title: "Mentorship",
-      description: "Connect with experienced mentors who will guide your journey.",
-      link: "/mentorship"
-    },
-    {
       icon: <FaUsers />,
       title: "Group Study",
       description: "Learn together with peers in collaborative study sessions.",
@@ -42,6 +30,12 @@ const Dashboard = () => {
       title: "Micro-Entrepreneurship",
       description: "Learn business skills and start your own micro-enterprise.",
       link: "/entrepreneurship"
+    },
+    {
+      icon: <FaInfoCircle />,
+      title: "Govt. Schemes for Women",
+      description: "Explore government programs and schemes dedicated to women's empowerment.",
+      link: "/schemes"
     }
   ];
 
