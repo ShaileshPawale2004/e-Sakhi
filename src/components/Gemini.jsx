@@ -1,53 +1,58 @@
 import React, { useEffect, useState } from 'react';
 
 const Gemini = ({ videoData }) => {
-  const [qaData, setQaData] = useState('');
-  const [loading, setLoading] = useState(true);
-  const [quizMode, setQuizMode] = useState(false);
+  const [quizData, setQuizData] = useState('');
+  const [loading, setLoading] = useState(false);
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [userAnswers, setUserAnswers] = useState([]);
   const [showResult, setShowResult] = useState(false);
+  const [quizStarted, setQuizStarted] = useState(false);
 
-  useEffect(() => {
-    const fetchQA = async () => {
-      setLoading(true);
-      try {
-        const { GoogleGenerativeAI } = await import('@google/generative-ai');
-        const apiKey = import.meta.env.VITE_GEMINI_API_KEY;
-        const genAI = new GoogleGenerativeAI(apiKey);
+  const startQuiz = async () => {
+    setQuizStarted(true);
+    setLoading(true);
+    try {
+      const { GoogleGenerativeAI } = await import('@google/generative-ai');
+      const apiKey = import.meta.env.VITE_GEMINI_API_KEY;
+      const genAI = new GoogleGenerativeAI(apiKey);
 
-        const model = genAI.getGenerativeModel({
-          model: 'gemini-2.0-flash-exp',
-        });
+      const model = genAI.getGenerativeModel({
+        model: 'gemini-2.0-flash-exp',
+      });
 
-        const prompt = `${videoData} — This is the caption of a YouTube video I am currently watching. Based only on the above content, generate multiple-choice questions with 4 options each (A, B, C, D). Each question should be followed by the 4 options and then clearly indicate the correct option. 
+      const prompt = `
+${videoData}
 
-Format each set like this:
+Based only on the above content, generate 20 multiple-choice questions with 4 options each (A, B, C, D). 
+Each question should be followed by 4 options and a clear correct answer.
+
+IMPORTANT:
+- Use the **same language** as the original content above.
+- Do not translate into English.
+- Respect the original tone and linguistic style.
+
+Format each question like this:
+
 Q: <question>
 A. <option 1>
 B. <option 2>
 C. <option 3>
 D. <option 4>
 Answer: <correct option letter>
+`;
 
-Make sure the language, tone, and style match the original content exactly.`;
+      const result = await model.generateContent(prompt);
+      const text = result.response.text().replace(/\*/g, '');
+      setQuizData(text);
+    } catch (error) {
+      console.error('Error fetching quiz:', error);
+      setQuizData('Failed to load quiz content.');
+    } finally {
+      setLoading(false);
+    }
+  };
 
-        const result = await model.generateContent(prompt);
-        const text = result.response.text().replace(/\*/g, '');
-        setQaData(text);
-        console.log("response qa data: ", text);
-      } catch (error) {
-        console.error('Error fetching Q&A:', error);
-        setQaData('Failed to load Q&A content.');
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    if (videoData) fetchQA();
-  }, [videoData]);
-
-  const parseQA = (text) => {
+  const parseQuiz = (text) => {
     if (!text || typeof text !== 'string') return [];
 
     const qaBlocks = text.split(/(?:^|\n)Q[:：]/).filter(Boolean);
@@ -71,18 +76,26 @@ Make sure the language, tone, and style match the original content exactly.`;
       return {
         question,
         options: Object.values(options),
-        answer: correctAnswer,
+        correctAnswer,
       };
-    }).filter(qa => qa.question && qa.answer && qa.options?.length === 4);
+    }).filter(qa => qa.question && qa.correctAnswer && qa.options?.length === 4);
   };
 
-  const qaList = parseQA(qaData);
+  const quizList = parseQuiz(quizData);
 
-  const handleAnswer = (selected) => {
-    const current = qaList[currentQuestion];
-    const isCorrect = selected === current.answer;
-    setUserAnswers(prev => [...prev, isCorrect]);
-    if (currentQuestion + 1 === qaList.length) {
+  const handleAnswer = (selectedOption) => {
+    const current = quizList[currentQuestion];
+    setUserAnswers(prev => [
+      ...prev,
+      {
+        selected: selectedOption,
+        correct: current.correctAnswer,
+        question: current.question,
+        options: current.options
+      }
+    ]);
+
+    if (currentQuestion + 1 === quizList.length) {
       setShowResult(true);
     } else {
       setCurrentQuestion(prev => prev + 1);
@@ -93,7 +106,8 @@ Make sure the language, tone, and style match the original content exactly.`;
     setCurrentQuestion(0);
     setUserAnswers([]);
     setShowResult(false);
-    setQuizMode(false);
+    setQuizStarted(false);
+    setQuizData('');
   };
 
   return (
@@ -108,119 +122,124 @@ Make sure the language, tone, and style match the original content exactly.`;
         color: '#333',
         textAlign: 'center'
       }}>
-        {quizMode ? 'Quiz Mode' : 'Questions & Answers based on Video Content'}
+        Quiz Mode
       </h2>
 
-      {loading ? (
-        <p style={{ textAlign: 'center', fontSize: '1.2rem' }}>⏳ Generating questions and answers...</p>
-      ) : (
-        <>
-          {!quizMode ? (
-            <>
-              <button
-                onClick={() => setQuizMode(true)}
-                style={{
-                  display: 'block',
-                  margin: '1rem auto',
-                  padding: '0.75rem 1.5rem',
-                  fontSize: '1rem',
-                  backgroundColor: '#1976d2',
-                  color: '#fff',
-                  border: 'none',
-                  borderRadius: '8px',
-                  cursor: 'pointer'
-                }}
-              >
-                🎯 Take a Quiz
-              </button>
-              {qaList.map((qa, index) => (
-                <div
-                  key={index}
-                  style={{
-                    backgroundColor: '#fff',
-                    borderRadius: '12px',
-                    padding: '1.5rem',
-                    marginBottom: '1.5rem',
-                    boxShadow: '0 4px 10px rgba(0, 0, 0, 0.08)',
-                  }}
-                >
-                  <p style={{
-                    fontWeight: '600',
-                    fontSize: '1.05rem',
-                    color: '#1976d2',
-                    marginBottom: '0.5rem',
-                  }}>
-                    Q{index + 1}: {qa.question}
-                  </p>
-                  <p style={{
-                    fontSize: '1rem',
-                    color: '#333',
-                    lineHeight: '1.6',
-                  }}>
-                    <strong>Ans:</strong> {qa.answer}
-                  </p>
-                </div>
-              ))}
-            </>
-          ) : showResult ? (
-            <div style={{ textAlign: 'center', marginTop: '2rem' }}>
-              <h3>🎉 You scored {userAnswers.filter(ans => ans).length} out of {qaList.length}</h3>
-              <button onClick={restartQuiz}
-                style={{
-                  marginTop: '1rem',
-                  padding: '0.6rem 1.2rem',
-                  fontSize: '1rem',
-                  backgroundColor: '#43a047',
-                  color: '#fff',
-                  border: 'none',
-                  borderRadius: '6px',
-                  cursor: 'pointer'
-                }}
-              >
-                🔄 Restart
-              </button>
-            </div>
-          ) : (
-            <div style={{
-              backgroundColor: '#fff',
-              borderRadius: '12px',
-              padding: '2rem',
-              marginBottom: '1.5rem',
-              boxShadow: '0 4px 10px rgba(0, 0, 0, 0.08)',
-              transition: 'all 0.3s ease-in-out',
-            }}>
-              <p style={{
-                fontWeight: '600',
-                fontSize: '1.1rem',
-                color: '#1976d2',
-                marginBottom: '1rem',
+      {!quizStarted ? (
+        <div style={{ textAlign: 'center', marginTop: '2rem' }}>
+          <button
+            onClick={startQuiz}
+            style={{
+              padding: '0.8rem 1.6rem',
+              fontSize: '1.2rem',
+              backgroundColor: '#1976d2',
+              color: '#fff',
+              border: 'none',
+              borderRadius: '8px',
+              cursor: 'pointer'
+            }}
+          >
+            ▶️ Start Quiz
+          </button>
+        </div>
+      ) : loading ? (
+        <p style={{ textAlign: 'center', fontSize: '1.2rem' }}>⏳ Generating quiz questions...</p>
+      ) : showResult ? (
+        <div>
+          <h3 style={{ textAlign: 'center' }}>
+            🎉 You scored {userAnswers.filter(ans => ans.selected === ans.correct).length} out of {quizList.length}
+          </h3>
+          <button onClick={restartQuiz}
+            style={{
+              margin: '1rem auto',
+              display: 'block',
+              padding: '0.6rem 1.2rem',
+              fontSize: '1rem',
+              backgroundColor: '#43a047',
+              color: '#fff',
+              border: 'none',
+              borderRadius: '6px',
+              cursor: 'pointer'
+            }}
+          >
+            🔄 Restart
+          </button>
+          {userAnswers.map((entry, index) => (
+            <div key={index}
+              style={{
+                backgroundColor: '#fff',
+                borderRadius: '12px',
+                padding: '1.5rem',
+                marginBottom: '1.5rem',
+                boxShadow: '0 4px 10px rgba(0, 0, 0, 0.08)',
               }}>
-                Q{currentQuestion + 1}: {qaList[currentQuestion]?.question}
+              <p style={{ fontWeight: '600', color: '#1976d2' }}>
+                Q{index + 1}: {entry.question}
               </p>
-              {qaList[currentQuestion]?.options.map((option, idx) => (
-                <button
-                  key={idx}
-                  onClick={() => handleAnswer(option)}
-                  style={{
-                    display: 'block',
-                    marginBottom: '0.8rem',
-                    padding: '0.6rem 1rem',
-                    width: '100%',
-                    textAlign: 'left',
-                    fontSize: '1rem',
-                    backgroundColor: '#e3f2fd',
-                    border: '1px solid #90caf9',
+              {entry.options.map((opt, i) => {
+                const isSelected = opt === entry.selected;
+                const isCorrect = opt === entry.correct;
+                let bgColor = '#e3f2fd';
+
+                if (isSelected && isCorrect) bgColor = '#c8e6c9'; // green
+                else if (isSelected && !isCorrect) bgColor = '#ffcdd2'; // red
+                else if (isCorrect) bgColor = '#c5e1a5'; // highlight correct
+
+                return (
+                  <div key={i} style={{
+                    backgroundColor: bgColor,
+                    padding: '0.5rem 1rem',
                     borderRadius: '8px',
-                    cursor: 'pointer',
-                    color: '#333'
-                  }}
-                >
-                  {option}
-                </button>
-              ))}
+                    marginBottom: '0.5rem'
+                  }}>
+                    {opt}
+                  </div>
+                );
+              })}
+              <p><strong>Correct:</strong> {entry.correct}</p>
+              <p><strong>You selected:</strong> {entry.selected}</p>
             </div>
-          )}
-        </>
+          ))}
+        </div>
+      ) : (
+        <div style={{
+          backgroundColor: '#fff',
+          borderRadius: '12px',
+          padding: '2rem',
+          marginBottom: '1.5rem',
+          boxShadow: '0 4px 10px rgba(0, 0, 0, 0.08)',
+          transition: 'all 0.3s ease-in-out',
+        }}>
+          <p style={{
+            fontWeight: '600',
+            fontSize: '1.1rem',
+            color: '#1976d2',
+            marginBottom: '1rem',
+          }}>
+            Q{currentQuestion + 1}: {quizList[currentQuestion]?.question}
+          </p>
+          {quizList[currentQuestion]?.options.map((option, idx) => (
+            <button
+              key={idx}
+              onClick={() => handleAnswer(option)}
+              style={{
+                display: 'block',
+                marginBottom: '0.8rem',
+                padding: '0.6rem 1rem',
+                width: '100%',
+                textAlign: 'left',
+                fontSize: '1rem',
+                backgroundColor: '#e3f2fd',
+                border: '1px solid #90caf9',
+                borderRadius: '8px',
+                cursor: 'pointer',
+                color: '#333'
+              }}
+            >
+              {option}
+            </button>
+          ))}
+        </div>
       )}
     </div>
   );

@@ -2,13 +2,15 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { fetchFromAPI } from '../utils/fetchFromAPI';
 import YouTubePlayerAll from '../components/YouTubePlayerAll';
+import axios from 'axios';
 
 const SearchFeed = () => {
   const [videos, setVideos] = useState([]);
   const [searchTerm, setSearchTerm] = useState('Rural woman Empowerment');
   const [tempSearch, setTempSearch] = useState('');
+  const [suggestions, setSuggestions] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [searched, setSearched] = useState(false); // To show "No results found" only after a search
+  const [searched, setSearched] = useState(false);
 
   useEffect(() => {
     if (searchTerm) {
@@ -16,8 +18,6 @@ const SearchFeed = () => {
       setSearched(true);
       fetchFromAPI(`${searchTerm}`)
         .then((data) => {
-          console.log("data: ", data);
-          
           setVideos(data || []);
         })
         .catch((error) => {
@@ -30,46 +30,92 @@ const SearchFeed = () => {
     }
   }, [searchTerm]);
 
+  const fetchSuggestions = async (query) => {
+    if (!query) return setSuggestions([]);
+
+    const options = {
+      method: 'GET',
+      url: 'https://youtube138.p.rapidapi.com/auto-complete/',
+      params: {
+        q: query,
+        hl: 'en',
+        gl: 'US'
+      },
+      headers: {
+        'x-rapidapi-key': import.meta.env.VITE_XRAPID_API_KEY,
+        'x-rapidapi-host': 'youtube138.p.rapidapi.com'
+      }
+    };
+
+    try {
+      const response = await axios.request(options);
+      console.log("response: ", response.data.results);
+      
+      const keywords = response.data?.results?.map(res => res.suggestion) || [];
+      console.log("KEYWORDS: ", keywords);
+      
+      setSuggestions(response.data.results);
+    } catch (error) {
+      console.error('Error fetching suggestions:', error);
+      setSuggestions([]);
+    }
+  };
+
+  const handleInputChange = (e) => {
+    const value = e.target.value;
+    setTempSearch(value);
+    fetchSuggestions(value);
+  };
+
+  const handleSuggestionClick = (suggestion) => {
+    setTempSearch(suggestion);
+    setSearchTerm(suggestion);
+    setSuggestions([]);
+  };
+
   return (
     <div style={styles.container}>
-      {/* Search input */}
       <div style={styles.searchContainer}>
-        <input
-          type="text"
-          placeholder="Search videos..."
-          value={tempSearch}
-          onChange={(e) => setTempSearch(e.target.value)}
-          style={styles.input}
-        />
-        <button
-          onClick={() => setSearchTerm(tempSearch)}
-          style={styles.button}
-        >
+        <div style={{ position: 'relative' }}>
+          <input
+            type="text"
+            placeholder="Search videos..."
+            value={tempSearch}
+            onChange={handleInputChange}
+            style={styles.input}
+          />
+          {suggestions.length > 0 && (
+            <ul style={styles.suggestionBox}>
+              {suggestions.map((sugg, idx) => (
+                <li
+                  key={idx}
+                  onClick={() => handleSuggestionClick(sugg)}
+                  style={styles.suggestionItem}
+                >
+                  {sugg}
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
+        <button onClick={() => setSearchTerm(tempSearch)} style={styles.button}>
           🔍 Search
         </button>
       </div>
 
-      {/* Loader */}
       {loading && <p style={styles.message}>Loading videos...</p>}
-
-      {/* No Results Message */}
       {!loading && searched && videos.length === 0 && (
         <p style={styles.message}>No videos found. Try a different keyword.</p>
       )}
-
-      {/* Videos */}
       <div style={styles.videosGrid}>
-        {videos.map((item) =>
-          (
-            <div key={item?.video?.videoId} style={styles.videoCard}>
-              {/* <h3>{item?.video?.videoId}</h3> */}
-              <YouTubePlayerAll videoId={item?.video?.videoId} />
-              <Link to={`/video/${item?.video?.videoId}`} style={styles.link}>
-                ▶ Open
-              </Link>
-            </div>
-          ) 
-        )}
+        {videos.map((item) => (
+          <div key={item?.video?.videoId} style={styles.videoCard}>
+            <YouTubePlayerAll videoId={item?.video?.videoId} />
+            <Link to={`/video/${item?.video?.videoId}`} style={styles.link}>
+              ▶ Open
+            </Link>
+          </div>
+        ))}
       </div>
     </div>
   );
@@ -104,6 +150,24 @@ const styles = {
     cursor: 'pointer',
     fontWeight: 'bold',
     transition: '0.3s ease',
+  },
+  suggestionBox: {
+    position: 'absolute',
+    top: '100%',
+    left: 0,
+    width: '100%',
+    backgroundColor: 'white',
+    border: '1px solid #ccc',
+    borderTop: 'none',
+    maxHeight: '200px',
+    overflowY: 'auto',
+    zIndex: 10,
+    borderRadius: '0 0 8px 8px',
+  },
+  suggestionItem: {
+    padding: '0.5rem 1rem',
+    cursor: 'pointer',
+    borderBottom: '1px solid #eee',
   },
   message: {
     textAlign: 'center',
