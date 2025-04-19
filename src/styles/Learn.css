@@ -1,6 +1,8 @@
 .learn-page {
   min-height: 100vh;
-  background: linear-gradient(135deg, #1a365d, #2d3748);
+  background-color: #1a365d;
+  background-image: url("https://www.transparenttextures.com/patterns/ag-square.png");
+  background-size: auto;
   padding: 2rem;
   color: white;
 }
@@ -8,6 +10,10 @@
 .learn-content {
   max-width: 1200px;
   margin: 0 auto;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: var(--radius-lg);
+  padding: 2rem;
+  backdrop-filter: blur(6px);
 }
 
 .learn-header {
@@ -33,14 +39,15 @@
   margin-bottom: 1rem;
 }
 
-.language-select {
+.language-select,
+.search-input {
   padding: 0.5rem 1rem;
   border-radius: var(--radius-md);
   background: rgba(255, 255, 255, 0.1);
   border: 1px solid rgba(255, 255, 255, 0.2);
   color: white;
   font-size: 0.9rem;
-  cursor: pointer;
+  transition: all 0.3s ease;
 }
 
 .language-select option {
@@ -48,18 +55,15 @@
   color: white;
 }
 
-.search-input {
-  flex: 1;
-  padding: 0.5rem 1rem;
-  border-radius: var(--radius-md);
-  background: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  color: white;
-  font-size: 0.9rem;
-}
-
 .search-input::placeholder {
   color: rgba(255, 255, 255, 0.6);
+}
+
+.language-select:focus,
+.search-input:focus {
+  outline: none;
+  border-color: rgba(255, 255, 255, 0.5);
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.1);
 }
 
 .course-section {
@@ -87,6 +91,7 @@
   border: 1px solid rgba(255, 255, 255, 0.2);
   padding: 1.5rem;
   transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
 }
 
 .course-card:hover {
@@ -154,4 +159,3 @@
     grid-template-columns: 1fr;
   }
 }
-

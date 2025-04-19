@@ -37,7 +37,7 @@ const Video = () => {
 
     if (ytState === window.YT.PlayerState.PLAYING) {
       audio.play();
-      logEvent(analytics, 'video_play', { videoId: vpid });
+      logEvent(analytics, "video_play", { videoId: vpid });
     } else if (
       ytState === window.YT.PlayerState.PAUSED ||
       ytState === window.YT.PlayerState.ENDED
@@ -68,6 +68,7 @@ const Video = () => {
 
     setAudioUrl(urlData.publicUrl);
   };
+
   const getBase64AndUpload = async (text) => {
     const voice = voiceMap[selectedLang];
     const response = await axios.post(
@@ -132,8 +133,22 @@ const Video = () => {
   }, [vpid, selectedLang]);
 
   return (
-    <div className="video-container" style={{ display: "flex", gap: "1rem", height: "100vh", padding: "1rem", minWidth: '100%', background: 'white' }}>
-      <div className="youtube-video-div" style={{ width: "70%", padding: "1rem", overflowY: "auto" }}>
+    <div
+      className="video-container"
+      style={{
+        display: "flex",
+        gap: "1rem",
+        height: "100vh",
+        padding: "1rem",
+        minWidth: "100%",
+        backgroundColor: "#1a365d",
+        backgroundImage: 'url("https://www.transparenttextures.com/patterns/ag-square.png")',
+        backgroundSize: "auto",
+        overflow: "hidden"
+      }}
+    >
+      {/* Left YouTube Panel */}
+      <div style={{ width: "70%", padding: "1rem", overflowY: "auto" }}>
         <YouTubePlayer
           key={vpid}
           videoId={vpid}
@@ -142,12 +157,12 @@ const Video = () => {
         />
 
         <div style={{ marginTop: "20px" }}>
-          <label>Select your language: </label>
+          <label style={{ color: "white", fontWeight: "bold" }}>Select your language: </label>
           <select
             value={selectedLang}
             onChange={(e) => {
               setSelectedLang(e.target.value);
-              logEvent(analytics, 'language_selected', { language: e.target.value });
+              logEvent(analytics, "language_selected", { language: e.target.value });
             }}
           >
             {languageOptions.map((lang) => (
@@ -159,8 +174,16 @@ const Video = () => {
         </div>
 
         <div style={{ marginTop: "20px" }}>
-          <h3>Translated Captions ({selectedLang}):</h3>
-          <div style={{ maxHeight: "20rem", overflowY: "auto", padding: "10px", borderRadius: "8px", backgroundColor: "#f9f9f9" }}>
+          <h3 style={{ color: "white" }}>Translated Captions ({selectedLang}):</h3>
+          <div
+            style={{
+              maxHeight: "20rem",
+              overflowY: "auto",
+              padding: "10px",
+              borderRadius: "8px",
+              backgroundColor: "#f9f9f9"
+            }}
+          >
             <p style={{ whiteSpace: "pre-wrap" }}>{translated || "Loading..."}</p>
           </div>
         </div>
@@ -170,7 +193,23 @@ const Video = () => {
         )}
       </div>
 
-      <div style={{ width: "30vw", padding: "1rem", overflowY: "auto" }}>
+      {/* Right Gemini Sidebar */}
+      <div
+        style={{
+          width: "30vw",
+          padding: "1.5rem",
+          overflowY: "auto",
+          background: "rgba(255, 255, 255, 0.08)",
+          backdropFilter: "blur(10px)",
+          borderTopLeftRadius: "16px",
+          borderBottomLeftRadius: "16px",
+          borderTopRightRadius: "0",
+          borderBottomRightRadius: "0",
+          borderLeft: "1px solid rgba(255, 255, 255, 0.1)",
+          color: "white",
+          boxShadow: "0 0 12px rgba(0, 0, 0, 0.2)"
+        }}
+      >
         <Gemini videoData={translated} />
       </div>
     </div>

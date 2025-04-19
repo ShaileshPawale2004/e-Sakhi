@@ -62,7 +62,7 @@ const Learn = () => {
     return courseList.filter(course => {
       const matchesLanguage = selectedLanguage === 'all' || course.languages.includes(selectedLanguage);
       const matchesSearch = course.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                          course.description.toLowerCase().includes(searchQuery.toLowerCase());
+                            course.description.toLowerCase().includes(searchQuery.toLowerCase());
       return matchesLanguage && matchesSearch;
     });
   };

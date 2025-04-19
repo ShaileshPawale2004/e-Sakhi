@@ -138,6 +138,7 @@
     padding: 2rem;
     background: rgba(255, 255, 255, 0.1);
     border-radius: var(--radius-lg);
+    color: black;
   }
   
   .score-icon {
