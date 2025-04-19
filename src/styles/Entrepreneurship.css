@@ -1,0 +1,153 @@
+/* Main Entrepreneurship Page */
+
+.entrepreneurship-page {
+  min-height: 100vh;
+  padding: 2.5rem 1rem;
+  background: linear-gradient(135deg, #1a365d, #2d3748);
+  color: #1f2937;
+  font-family: inherit;
+}
+
+.entrepreneurship-container {
+  max-width: 96rem;
+  margin: 0 auto;
+}
+
+.entrepreneurship-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 2rem;
+  color: white;
+}
+
+.entrepreneurship-subtitle {
+  font-size: 1.125rem;
+  text-align: center;
+  margin-bottom: 2rem;
+  color: white;
+}
+
+.entrepreneurship-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+  padding-bottom: 2rem;
+}
+
+.idea-card {
+  background-color: #ffffff;
+  border-radius: 1rem;
+  padding: 1.5rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  cursor: pointer;
+  transition: box-shadow 0.3s ease;
+  text-align: center;
+}
+
+.idea-card:hover {
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+}
+
+.idea-icon {
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.idea-title {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: #1f2937;
+  margin-bottom: 0.25rem;
+}
+
+.idea-income {
+  font-size: 0.9rem;
+  color: #6b7280;
+}
+
+/* PracticeDetails Page Styling */
+
+.practice-back-button {
+  position: absolute;
+  top: 2rem;
+  right: 2rem;
+  background: linear-gradient(to right, #2b6cb0, #2c5282);
+  color: white;
+  border: none;
+  border-radius: 0.5rem;
+  padding: 0.6rem 1.2rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  z-index: 10;
+}
+
+.practice-back-button:hover {
+  background-color: #2c5282;
+}
+
+.practice-box {
+  background-color: #ffffff;
+  padding: 2rem;
+  border-radius: 1rem;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+  margin: 3rem auto 1rem;
+  max-width: 700px;
+  text-align: center;
+  position: relative;
+}
+
+.practice-icon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+.practice-title {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #1f2937;
+  margin-bottom: 0.5rem;
+}
+
+.practice-income {
+  color: #475569;
+  margin-bottom: 2rem;
+}
+
+.practice-section {
+  margin-top: 2rem;
+  text-align: left;
+  display: inline-block;
+  max-width: 500px;
+  width: 100%;
+}
+
+.practice-section-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #1f2937;
+  margin-bottom: 0.5rem;
+}
+
+.practice-section ul,
+.practice-section ol {
+  padding-left: 1.5rem;
+}
+
+.idea-img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+
+.practice-img {
+  width: 250px;
+  height: 250px;
+  object-fit: cover;
+  border-radius: 1rem;
+  margin-bottom: 1rem;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+}

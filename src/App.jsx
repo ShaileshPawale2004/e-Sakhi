@@ -13,6 +13,8 @@ import Profile from "./pages/Profile";
 import About from "./pages/About";
 import SearchFeed from "./pages/SearchFeed";
 import Video from "./pages/Video";
+import Entrepreneurship from "./pages/Entrepreneurship"; 
+import PracticeDetails from './pages/PracticeDetails';
 
 function App() {
   return (
@@ -31,10 +33,11 @@ function App() {
         <Route path="/groupstudy" element={<GroupStudy />} />
         <Route path="/skills" element={<Learn />} />
         <Route path="/mentorship" element={<GroupStudy />} />
-        <Route path="/entrepreneurship" element={<Learn />} />
+        <Route path="/entrepreneurship" element={<Entrepreneurship />} /> {/* ✅ fixed */}
+        <Route path="/entrepreneurship/:practiceId" element={<PracticeDetails />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/about" element={<About />} />
-        <Route path='/searchFeed' element={<SearchFeed/>}/>
+        <Route path="/searchFeed" element={<SearchFeed />} />
         <Route path="/video/:vpid" element={<Video />} />
       </Routes>
     </BrowserRouter>

@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import IdeaCard from '../components/IdeaCard';
-import IdeaModal from '../components/IdeaModal';
+// src/pages/PracticeDetails.jsx
+import React from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
 import '../styles/Entrepreneurship.css';
 import defaultImg1 from '../assets/practices/B1.jpg';
 import defaultImg2 from '../assets/practices/B2.jpg';
@@ -156,27 +156,48 @@ const entrepreneurshipIdeas = [
   }
 ];
 
-const Entrepreneurship = () => {
-  const [selectedIdea, setSelectedIdea] = useState(null);
+const PracticeDetails = () => {
+  const { practiceId } = useParams();
+  const navigate = useNavigate();
+
+  const idea = entrepreneurshipIdeas.find(item => item.id === practiceId);
+
+  if (!idea) {
+    return <div className="entrepreneurship-page">Practice not found.</div>;
+  }
 
   return (
     <div className="entrepreneurship-page">
-      <div className="entrepreneurship-container">
-        <h1 className="entrepreneurship-title">🌱 Micro-Entrepreneurship Ideas</h1>
-        <p className="entrepreneurship-subtitle">
-          Practical income opportunities for rural girls. Click on any to learn how to get started.
-        </p>
-        <div className="entrepreneurship-grid">
-          {entrepreneurshipIdeas.map((idea) => (
-            <IdeaCard key={idea.id} idea={idea} onClick={() => setSelectedIdea(idea)} />
-          ))}
+      <div className="entrepreneurship-container" style={{ position: 'relative' }}>
+
+        <div className="practice-box">
+          <img src={idea.image} alt={idea.title} className="practice-img" />
+          <h1 className="practice-title">{idea.title}</h1>
+          <p className="practice-income">
+            <strong>Estimated Income:</strong> {idea.income}
+          </p>
+
+          <div className="practice-section">
+            <h2 className="practice-section-title">🛠 Tools Needed</h2>
+            <ul>
+              {idea.tools.map((tool, index) => (
+                <li key={index}>{tool}</li>
+              ))}
+            </ul>
+          </div>
+
+          <div className="practice-section">
+            <h2 className="practice-section-title">📋 Steps to Start</h2>
+            <ol>
+              {idea.steps.map((step, index) => (
+                <li key={index}>{step}</li>
+              ))}
+            </ol>
+          </div>
         </div>
-        {selectedIdea && (
-          <IdeaModal idea={selectedIdea} onClose={() => setSelectedIdea(null)} />
-        )}
       </div>
     </div>
   );
 };
 
-export default Entrepreneurship;
+export default PracticeDetails;
