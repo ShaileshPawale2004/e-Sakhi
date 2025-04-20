@@ -28,6 +28,8 @@ const Schemes = () => {
     const fetchSchemes = async () => {
       const resp = await axios.get('http://localhost:5000/getSchemes');
       setSchemes(resp.data);
+      console.log("resp:", resp);
+      
     };
     fetchSchemes();
   }, []);

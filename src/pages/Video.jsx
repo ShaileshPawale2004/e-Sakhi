@@ -114,48 +114,18 @@ const Video = () => {
 
   useEffect(() => {
     const fetchCaptions = async () => {
-
-
-      const options = {
-        method: 'GET',
-        url: 'https://youtube-to-transcript-api.p.rapidapi.com/',
-        params: {
-          url: `https://www.youtube.com/watch?v=${vpid}`,
-          lang: 'en'
-        },
-        headers: {
-          'x-rapidapi-key': import.meta.env.VITE_CAPTION_API_KEY,
-          'x-rapidapi-host': 'youtube-to-transcript-api.p.rapidapi.com'
+      const response = await axios.get(
+        "https://youtubetextconverter.p.rapidapi.com/YouTubeCaptions.asp",
+        {
+          params: { vapi: vpid },
+          headers: {
+            "x-rapidapi-key": import.meta.env.VITE_XRAPID_API_KEY,
+            "x-rapidapi-host": "youtubetextconverter.p.rapidapi.com",
+          },
         }
-      };
-      
-      async function fetchData() {
-        try {
-          const response = await axios.request(options);
-          console.log("type: ", typeof(response.data.transcript), response.data.transcript);
-          setCaptions(response.data.transcript);
-          translateCaptions(response.data.transcript, selectedLang);
-        } catch (error) {
-          console.error(error);
-          setCaptions('No captions');
-        }
-      }
-      
-      fetchData()
-
-
-      // const response = await axios.get(
-      //   "https://youtubetextconverter.p.rapidapi.com/YouTubeCaptions.asp",
-      //   {
-      //     params: { vapi: vpid },
-      //     headers: {
-      //       "x-rapidapi-key": import.meta.env.VITE_XRAPID_API_KEY,
-      //       "x-rapidapi-host": "youtubetextconverter.p.rapidapi.com",
-      //     },
-      //   }
-      // );
-      // console.log("rsp: ", response)
-      // setCaptions(response.data);
+      );
+      setCaptions(response.data);
+      translateCaptions(response.data, selectedLang);
     };
 
     fetchCaptions();
