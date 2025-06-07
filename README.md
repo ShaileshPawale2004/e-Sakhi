@@ -62,8 +62,8 @@ npm run dev
 ## 📹 Demo & Links
 
 - 📽️ Video Demo: https://drive.google.com/file/d/1fBxIVFAya1qsXFozkULVpsNZ2E1AKYcT/view?usp=drive_link
-- 🔗 Live: *[Insert Render Live Link]*
-- 📁 GitHub: *[Insert Repo Link]*
+- 🔗 Live: *[Insert Render Live Link]
+- 📁 GitHub: https://github.com/ShaileshPawale2004/Prabal-Project.git
 
 
 Build for empowering India’s rural girls through digital means.
