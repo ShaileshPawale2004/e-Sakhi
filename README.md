@@ -61,7 +61,7 @@ npm run dev
 
 ## 📹 Demo & Links
 
-- 📽️ Video Demo: *[Insert Video Link]*
+- 📽️ Video Demo: https://drive.google.com/file/d/1fBxIVFAya1qsXFozkULVpsNZ2E1AKYcT/view?usp=drive_link
 - 🔗 Live: *[Insert Render Live Link]*
 - 📁 GitHub: *[Insert Repo Link]*
 
